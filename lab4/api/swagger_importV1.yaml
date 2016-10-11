@@ -1,0 +1,47 @@
+---
+swagger: "2.0"
+info:
+  version: "2016-08-22T15:16:59Z"
+  title: "Workshop Encryption Proxy API"
+host: "<deployment_ID>.execute-api.AWS_REGION.amazonaws.com"
+basePath: "/dev"
+schemes:
+- "https"
+paths:
+  /decrypt:
+    post:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:AWS_REGION:lambda:path/2015-03-31/functions/arn:aws:lambda:AWS_REGION:AWS_ACCOUNT:function:WORKSHOP_DEC_FUNCTION_NAME/invocations"
+        passthroughBehavior: "when_no_match"
+        responses:
+          default:
+            statusCode: "200"
+        httpMethod: "POST"
+        type: "aws"
+  /encrypt:
+    post:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:AWS_REGION:lambda:path/2015-03-31/functions/arn:aws:lambda:AWS_REGION:AWS_ACCOUNT:function:WORKSHOP_ENC_FUNCTION_NAME/invocations"
+        passthroughBehavior: "when_no_match"
+        responses:
+          default:
+            statusCode: "200"
+        httpMethod: "POST"
+        type: "aws"
+definitions:
+  Empty:
+    type: "object"

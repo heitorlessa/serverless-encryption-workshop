@@ -1,0 +1,35 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "EncryptKMS",
+            "Effect": "Allow",
+            "Action": [
+                "kms:GenerateDataKey"
+            ],
+            "Resource": [
+                "arn:aws:kms:AWS_REGION:AWS_ACCOUNT:key/AWS_KMS_KEY_ID"
+            ]
+        },
+        {
+            "Sid": "LambdaConfig",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::WORKSHOP_S3_ENC_BUCKET/*"
+            ]
+        },
+        {
+            "Sid": "PushLogsToCloudwatch",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:logs:*:*:*"
+        }
+    ]
+}
