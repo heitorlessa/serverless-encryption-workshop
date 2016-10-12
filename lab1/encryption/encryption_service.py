@@ -11,7 +11,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 kms = boto3.client('kms')
-KMSKeyId = "AWS_KMS_KEY_ID"
+KMSKeyId = "c7f2d8cc-0da5-4f99-a324-e94aba3c0b24"
 
 class Crypter(object):
     """Crypter provides easy encryption through KMS Encrypt endpoint"""

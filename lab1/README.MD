@@ -55,7 +55,9 @@ aws cloudformation create-stack --stack-name "workshop-test" --template-body fil
 Assuming role:
 
 ```bash
-aws sts assume-role --role-arn "arn:aws:iam::848715237199:role/testRoles-EncryptionServiceIAMRole-O2BHJEJ8IIOD" --role-session-name "TemporarySession"
+aws sts assume-role --role-arn ${ENC_IAM_ROLE} --role-session-name "TemporarySession"
+
+aws sts assume-role --role-arn ${DEC_IAM_ROLE} --role-session-name "TemporarySession"
 ```
 
 Testing KMS Encrypt permission via CLI:

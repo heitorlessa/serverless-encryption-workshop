@@ -47,13 +47,13 @@ build-decryption: bootstrap ## -> Packages decryption lambda function into accep
 
 create-s3: bootstrap ## Creates S3 Bucket for both lambda functions
 	$(info "[+] Creating the following S3 buckets: ${ENC_NAME} ${DEC_NAME}")
-	python bootstrap_scripts/s3.py -c ${ENC_NAME}
-	python bootstrap_scripts/s3.py -c ${DEC_NAME}
+	python bootstrap_scripts/create_s3_buckets.py -c ${ENC_NAME}
+	python bootstrap_scripts/create_s3_buckets.py -c ${DEC_NAME}
 
 create-dynamo: bootstrap ## Creates DynamoDB local table and item sample for both lambda functions
 	$(info "[+] Creating the following DynamoDB local tables: ${ENC_NAME} ${DEC_NAME}")
-	python bootstrap_scripts/dynamo.py -c ${ENC_NAME}
-	python bootstrap_scripts/dynamo.py -c ${DEC_NAME}
+	python bootstrap_scripts/create_dynamo_local_table.py -c ${ENC_NAME}
+	python bootstrap_scripts/create_dynamo_local_table.py -c ${DEC_NAME}
 
 test-encryption: bootstrap ## -> Use Emulambda to test encryption function
 ifndef ENC_IAM_ROLE
