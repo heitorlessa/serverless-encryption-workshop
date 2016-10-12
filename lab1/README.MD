@@ -33,6 +33,17 @@ Here's how this folder has been structured:
 
 ---
 
+### Things to watch out for
+
+- [ ] Have you bootstrapped your dev environment?
+- [ ] Have you manually added KMS Key ID into [encryption code](encryption/encryption_service.py)?
+- [ ] Are you able to assume both Encryption and Decryption Roles?
+    - If not, double check Trust policy to see if your user or federated role is there
+- [ ] Are you able to encrypt data using the KMS Key?
+    - Try *make test-encryption*
+
+---
+
 #### Appendix
 
 Creating minimum resources via Cloudformation:
