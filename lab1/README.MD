@@ -41,6 +41,12 @@ Creating minimum resources via Cloudformation:
 aws cloudformation create-stack --stack-name "workshop-test" --template-body file://cloudformation/minimum_resources.yaml --capabilities="CAPABILITY_IAM" --parameters ParameterKey=User,ParameterValue=$USER --disable-rollback
 ```
 
+Assuming role:
+
+```bash
+aws sts assume-role --role-arn "arn:aws:iam::848715237199:role/testRoles-EncryptionServiceIAMRole-O2BHJEJ8IIOD" --role-session-name "TemporarySession"
+```
+
 Testing KMS Encrypt permission via CLI:
 
 ```python

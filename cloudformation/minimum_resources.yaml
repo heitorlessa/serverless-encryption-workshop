@@ -13,15 +13,16 @@ Outputs:
 
     DecryptionServiceIAMRole:
         Description: IAM Role ARN for Lambda Decryption Service
-        Value: !GetAtt DecryptionServiceIAMRole.Arn
+        Value: !Join ["", [ "export ENC_IAM_ROLE='", !GetAtt DecryptionServiceIAMRole.Arn, "'"]]
 
     EncryptionServiceIAMRole:
         Description: IAM Role ARN for Lambda Encryption Service
-        Value: !GetAtt EncryptionServiceIAMRole.Arn
+        Value: !Join ["", [ "export DEC_IAM_ROLE='", !GetAtt EncryptionServiceIAMRole.Arn, "'"]]
 
     KMSKeyId:
         Description: KMS Key for encryption/decryption
         Value: !Ref EncryptionDecryptionKey
+
 
 Parameters:
 
@@ -139,7 +140,9 @@ Resources:
                 - "kms:Encrypt"
                 - "kms:GenerateDataKey"
               Principal:
-                AWS: !GetAtt EncryptionServiceIAMRole.Arn
+                AWS: 
+                  - !GetAtt EncryptionServiceIAMRole.Arn
+                  - !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":user/", !Ref User ]]
               Resource: '*'
             - 
               Sid: "Allow Decryption Service to use this key"
@@ -148,5 +151,7 @@ Resources:
                 - "kms:Decrypt"
                 - "kms:GenerateDataKey"
               Principal:
-                AWS: !GetAtt DecryptionServiceIAMRole.Arn
-              Resource: '*'    
+                AWS: 
+                  - !GetAtt DecryptionServiceIAMRole.Arn
+                  - !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":user/", !Ref User ]]
+              Resource: '*'
