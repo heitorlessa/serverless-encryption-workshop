@@ -45,6 +45,10 @@ build-decryption: bootstrap ## -> Packages decryption lambda function into accep
 	cd ${VENV}/dist && zip -r ${BASE}/${DEC_NAME}.zip *; \
 	$(info "[*] Build complete: ${BASE}/${DEC_NAME}.zip")
 
+#
+# Fix create-s3/dynamo to use _venv
+#
+
 create-s3: bootstrap ## Creates S3 Bucket for both lambda functions
 	$(info "[+] Creating the following S3 buckets: ${ENC_NAME} ${DEC_NAME}")
 	python ../bootstrap_scripts/create_s3_buckets.py -c ${ENC_NAME}
@@ -63,6 +67,16 @@ endif
 	test -f test-encryption.json && test -f context.json || (echo "[!] Test event/context file not found"; exit 1); \
 	source ${VENV}/bin/activate; \
 	cd encryption/; \
+	emulambda encryption_service.lambda_handler test-encryption.json context.json -v -r ${ENC_IAM_ROLE}
+
+test-local-encryption: bootstrap ## -> Use Emulambda to test encryption function
+ifndef ENC_IAM_ROLE
+   $(error "[!] Missing ENC_IAM_ROLE variable - Export env with full ARN")
+endif
+	$(info "[+] Testing ${ENC_NAME} function locally")
+	test -f config_sample/within_package/test-encryption.json && test -f context.json || (echo "[!] Test event/context file not found"; exit 1); \
+	source ${VENV}/bin/activate; \
+	cd config_sample/within_package/; \
 	emulambda encryption_service.lambda_handler test-encryption.json context.json -v -r ${ENC_IAM_ROLE}
 
 test-decryption: bootstrap ## -> Use Emulambda to test decryption function
