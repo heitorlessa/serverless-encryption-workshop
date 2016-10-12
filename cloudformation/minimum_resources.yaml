@@ -140,9 +140,7 @@ Resources:
                 - "kms:Encrypt"
                 - "kms:GenerateDataKey"
               Principal:
-                AWS: 
-                  - !GetAtt EncryptionServiceIAMRole.Arn
-                  - !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":user/", !Ref User ]]
+                AWS: !GetAtt EncryptionServiceIAMRole.Arn
               Resource: '*'
             - 
               Sid: "Allow Decryption Service to use this key"
@@ -151,7 +149,5 @@ Resources:
                 - "kms:Decrypt"
                 - "kms:GenerateDataKey"
               Principal:
-                AWS: 
-                  - !GetAtt DecryptionServiceIAMRole.Arn
-                  - !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":user/", !Ref User ]]
+                AWS: !GetAtt DecryptionServiceIAMRole.Arn
               Resource: '*'
