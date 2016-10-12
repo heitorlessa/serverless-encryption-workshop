@@ -52,7 +52,9 @@ Resources:
                   Effect: "Allow"
                   Action: "sts:AssumeRole"
                   Principal:
-                    AWS: !Ref AWS::AccountId
+                    AWS: 
+                      - !Ref AWS::AccountId
+                      - !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":user/", !Ref User ]]
             Policies:
               - 
                 PolicyName: "BasicExecution"
@@ -88,7 +90,9 @@ Resources:
                   Action: 
                     - "sts:AssumeRole"
                   Principal:
-                    AWS: !Ref AWS::AccountId
+                    AWS:
+                      - !Ref AWS::AccountId
+                      - !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":user/", !Ref User ]]
             Policies:
               -
                 PolicyName: "BasicExecution"
