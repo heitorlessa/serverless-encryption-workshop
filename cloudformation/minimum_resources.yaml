@@ -27,7 +27,7 @@ Outputs:
 Parameters:
 
     User:
-        Description: Username currently defined in $USER
+        Description: Username currently defined in $USER or IAM user
         Type: String
 
 Resources:
